@@ -8,7 +8,6 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -32,7 +31,7 @@ class Ui_MainWindow(object):
         font.setWeight(9)
         self.label_title_4.setFont(font)
         self.label_title_4.setStyleSheet("color: rgb(0, 0, 0);\n"
-                                         "font: 75 28pt \"Agency FB\";")
+"font: 75 28pt \"Agency FB\";")
         self.label_title_4.setObjectName("label_title_4")
         self.verticalLayout_12.addWidget(self.label_title_4, 0, QtCore.Qt.AlignHCenter)
         self.verticalLayout.addLayout(self.verticalLayout_12)
@@ -92,7 +91,7 @@ class Ui_MainWindow(object):
         font.setPointSize(20)
         self.pushBt_dwn_10.setFont(font)
         self.pushBt_dwn_10.setStyleSheet("background-color: rgb(85, 170, 255);\n"
-                                         "background-color: rgb(168, 168, 168);")
+"background-color: rgb(168, 168, 168);")
         self.pushBt_dwn_10.setObjectName("pushBt_dwn_10")
         self.horizontalLayout_24.addWidget(self.pushBt_dwn_10)
         self.pushBt_reset_10 = QtWidgets.QPushButton(self.centralwidget)
@@ -101,7 +100,7 @@ class Ui_MainWindow(object):
         font.setPointSize(20)
         self.pushBt_reset_10.setFont(font)
         self.pushBt_reset_10.setStyleSheet("background-color: rgb(85, 170, 255);\n"
-                                           "background-color: rgb(172, 172, 172);")
+"background-color: rgb(172, 172, 172);")
         self.pushBt_reset_10.setObjectName("pushBt_reset_10")
         self.horizontalLayout_24.addWidget(self.pushBt_reset_10)
         self.pushBt_cntinu_10 = QtWidgets.QPushButton(self.centralwidget)
@@ -129,7 +128,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-
+        
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -143,3 +142,4 @@ class Ui_MainWindow(object):
         self.pushBt_dwn_10.setText(_translate("MainWindow", "下一张"))
         self.pushBt_reset_10.setText(_translate("MainWindow", "重新开始"))
         self.pushBt_cntinu_10.setText(_translate("MainWindow", "继续"))
+
