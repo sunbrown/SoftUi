@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/SoftUi.iml" filepath="$PROJECT_DIR$/.idea/SoftUi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../thyroid_nodule/.idea/thyroid_nodule.iml" filepath="$PROJECT_DIR$/../thyroid_nodule/.idea/thyroid_nodule.iml" />
+    </modules>
+  </component>
+</project>
