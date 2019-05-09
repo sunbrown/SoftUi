@@ -41,8 +41,8 @@ def pro(path):
     out_img_tensor[1, pre == 1] = 1
     pil_trans = transforms.ToPILImage('RGB')
     out_img = pil_trans(out_img_tensor)
-    out_img.save('1.jpg')
-    img1 = QPixmap('1.jpg')
+    out_img.save('{}_result.jpg'.format(path))
+    img1 = QPixmap('{}_result.jpg'.format(path))
     return img1
 
 
