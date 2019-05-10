@@ -14,12 +14,9 @@ os.environ['CUDA_VISIBLE_DEVICES'] = '0, 1, 2, 3'
 def pro(path):
     n_class = 3
     model = UNet(n_channels=3, n_classes=n_class)
-    # print(model)
-
     model = nn.DataParallel(model, device_ids=[0])
-
     model.load_state_dict(torch.load('trainmodels.pth'))
-    pil_trans = transforms.ToPILImage('RGB')
+    tensor2pil = transforms.ToPILImage('RGB')
     img2tensor = transforms.ToTensor()
     transform = transforms.Compose([
         transforms.ToTensor(),
@@ -29,15 +26,12 @@ def pro(path):
     image = Image.open(path).convert('RGB')
     image = image.resize((224, 224), Image.ANTIALIAS)
     IMG = image
-    image_tensor = transform(image)
-    image_origen = img2tensor(image)
-    n = image_tensor.size()
+    in_img_tensor = transform(image)
+    in_img_origin = img2tensor(image)
+    n = in_img_tensor.size()
     data = torch.ones(1, 3, n[1], n[2])
-    data[0] = image_tensor
-    # img_origin = transforms.ToPILImage('L')(data[0])
-    # img_origin.show()
-    image_tensor = torch.squeeze(image_origen) # 保存原图
-
+    data[0] = in_img_tensor
+    in_img_tensor = torch.squeeze(in_img_origin) # 保存原图
     data = Variable(data.cuda(0))
     with torch.no_grad():
         output = model(data)
@@ -47,35 +41,20 @@ def pro(path):
     out_img_tensor[0, pre == 2] = 1
     out_img_tensor[1, pre == 1] = 1
     # =========================================
-
     for i in range(n[1]):
         for j in range(n[2]):
             if out_img_tensor[0, i, j] == 1 or out_img_tensor[1, i, j] == 1:
-                image_tensor[:, i, j] = 0
-    out_img_tensor = image_tensor + out_img_tensor
-
-    img_result = pil_trans(out_img_tensor)
-    # img_result.show()
-    # 待修改，
+                in_img_tensor[:, i, j] = 0
+    out_img_tensor = in_img_tensor + out_img_tensor
     # ==========================================
-
     path_filename = osp.split(path)
+    f_name = os.path.splitext(path_filename[1])[0]
     filename = path_filename[1]  # [0]表示file的路径, [1]表示文件
-
-    out_img = pil_trans(out_img_tensor)
+    out_img_pil = tensor2pil(out_img_tensor)
     # os.mkdir(path_filename[0] + '/res/')
-    out_img.save(path_filename[0] + '/res/' + path_filename[1])
-
-
-    # img1 = Image.open(path_filename[0] + '/res/' + path_filename[1]).convert('RGB')
-    # img1 = img1.resize((224, 224), Image.ANTIALIAS)
-
-    # show_img = img1 + IMG
-
-    # show_img.show()
-
-    img1 = QPixmap(path_filename[0] + '/res/' + path_filename[1])
-    return img1
+    out_img_pil.save(path_filename[0] + '/res/' + f_name + '.png')
+    return_img = QPixmap(path_filename[0] + '/res/' + f_name + '.png')
+    return return_img
 
 
 if __name__ == '__main__':
