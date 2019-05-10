@@ -140,6 +140,6 @@ class Ui_MainWindow(object):
         self.label_res_10.setText(_translate("MainWindow", "预测结果："))
         self.pushBt_up_10.setText(_translate("MainWindow", "上一张"))
         self.pushBt_dwn_10.setText(_translate("MainWindow", "下一张"))
-        self.pushBt_reset_10.setText(_translate("MainWindow", "重新开始"))
-        self.pushBt_cntinu_10.setText(_translate("MainWindow", "继续"))
+        self.pushBt_reset_10.setText(_translate("MainWindow", "批量图像目录"))
+        self.pushBt_cntinu_10.setText(_translate("MainWindow", "单图像选择"))
 
