@@ -4,7 +4,7 @@ from PyQt5 import  QtWidgets,QtGui,QtCore
 from PyQt5.QtWidgets import QFileDialog,QMessageBox
 from PyQt5.QtGui import QPixmap
 import os
-#import process
+import process
 import numpy as np
 from skimage import exposure
 class mywindow(QtWidgets.QMainWindow,Ui_MainWindow):
@@ -78,7 +78,7 @@ class mywindow(QtWidgets.QMainWindow,Ui_MainWindow):
         return ""
     
     def label_10_response(self, pathImg):
-        img = self.process(pathImg)
+        img = process.pro(pathImg)
         w = self.label_10.width()
         h = self.label_10.height()
         img = img.scaled(w,h)
