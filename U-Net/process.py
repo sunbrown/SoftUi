@@ -25,13 +25,12 @@ def pro(path):
     ])
     image = Image.open(path).convert('RGB')
     image = image.resize((224, 224), Image.ANTIALIAS)
-    IMG = image
     in_img_tensor = transform(image)
     in_img_origin = img2tensor(image)
     n = in_img_tensor.size()
     data = torch.ones(1, 3, n[1], n[2])
     data[0] = in_img_tensor
-    in_img_tensor = torch.squeeze(in_img_origin) # 保存原图
+    in_img_origin = torch.squeeze(in_img_origin)  # 保存原图
     data = Variable(data.cuda(0))
     with torch.no_grad():
         output = model(data)
@@ -40,12 +39,22 @@ def pro(path):
     out_img_tensor = torch.zeros(3, n[1], n[2])
     out_img_tensor[0, pre == 2] = 1
     out_img_tensor[1, pre == 1] = 1
-    # =========================================
+    if torch.sum(out_img_tensor[0])-torch.sum(out_img_tensor[1]) > 0:
+        out_img_tensor[0] = out_img_tensor[0] + out_img_tensor[1]
+        out_img_tensor[1] = 0
+        results = '恶性'
+    else:
+        out_img_tensor[1] = out_img_tensor[0] + out_img_tensor[1]
+        out_img_tensor[0] = 0
+        results = '良性'
+    #  =========================================
     for i in range(n[1]):
         for j in range(n[2]):
             if out_img_tensor[0, i, j] == 1 or out_img_tensor[1, i, j] == 1:
-                in_img_tensor[:, i, j] = 0
-    out_img_tensor = in_img_tensor + out_img_tensor
+                in_img_origin[:, i, j] = 0
+
+
+    out_img_tensor = in_img_origin + out_img_tensor
     # ==========================================
     path_filename = osp.split(path)
     f_name = os.path.splitext(path_filename[1])[0]
@@ -54,7 +63,7 @@ def pro(path):
     # os.mkdir(path_filename[0] + '/res/')
     out_img_pil.save(path_filename[0] + '/res/' + f_name + '.png')
     return_img = QPixmap(path_filename[0] + '/res/' + f_name + '.png')
-    return return_img
+    return return_img, results
 
 
 if __name__ == '__main__':
