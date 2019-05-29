@@ -49,69 +49,58 @@ class mywindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.label_i_10.setText(strIm_num)
             pathImg = self.directory + "/" + self.file_list[self.im_idx]
             self.label_10_response(pathImg)
-            # with open('globalsave.pkl', 'wb') as f:
-            #     pickle.dump([self.file_num, self.file_list, self.im_idx, self.directory], f)
         except Exception:
             pass
 
     def pre(self):
         try:
-            print("pre start...")
             if self.im_idx < 0:
                 return
-            self.im_idx -= 1
-            print(self.im_idx)
-            pathImg = self.directory + "/" + self.file_list[self.im_idx]
-            print(pathImg)
-            # self.label_i_10.setStyleSheet('font: 20pt "Agency FB"')
-            # self.label_i_10.setStyleSheet('color: rgb(0, 0, 0)')
-            strIm_num = "处理第 " + str(self.im_idx + 1) + " 张"
-            self.label_i_10.setText(strIm_num)
-            self.label_10_response(pathImg)
-            # with open('globalsave.pkl', 'wb') as f:
-            #     pickle.dump([self.file_num, self.file_list, self.im_idx, self.directory], f)
+            else:
+                self.im_idx -= 1
+                pathImg = self.directory + "/" + self.file_list[self.im_idx]
+                # self.label_i_10.setStyleSheet('font: 20pt "Agency FB"')
+                # self.label_i_10.setStyleSheet('color: rgb(0, 0, 0)')
+                strIm_num = "处理第 " + str(self.im_idx + 1) + " 张"
+                self.label_i_10.setText(strIm_num)
+                self.label_10_response(pathImg)
         except Exception:
             pass
 
     def next(self):
-        print("next start...")
         try:
-            if self.im_idx > self.file_num-1:
+            if self.im_idx >= self.file_num - 1:
                 return
-            self.im_idx += 1
-            pathImg = self.directory + "/" + self.file_list[self.im_idx]
-            # print(pathImg)
-            # self.label_i_10.setStyleSheet('font: 26pt "Agency FB"')
-            # self.label_i_10.setStyleSheet('color: rgb(0, 0, 0)')
-            strIm_num = "处理第 " + str(self.im_idx + 1) + " 张"
-            self.label_i_10.setText(strIm_num)
-            self.label_10_response(pathImg)
-            # with open('globalsave.txt', 'wb') as f:
-            #     pickle.dump([self.file_num, self.file_list, self.im_idx, self.directory], f)
-        except Exception:
-            pass
-
+            else:
+                self.im_idx += 1
+                pathImg = self.directory + "/" + self.file_list[self.im_idx]
+                # print(pathImg)
+                # self.label_i_10.setStyleSheet('font: 26pt "Agency FB"')
+                # self.label_i_10.setStyleSheet('color: rgb(0, 0, 0)')
+                strIm_num = "处理第 " + str(self.im_idx + 1) + " 张"
+                self.label_i_10.setText(strIm_num)
+                self.label_10_response(pathImg)
+        except Exception as e:
+            print(e)
 
     def continu(self):
-        try:
-            with open('globalsave.txt', 'rb') as f:
-                self.file_num = pickle.l
-                self.file_list = pickle.load(f)
-                self.im_idx = pickle.load(f)
-                self.directory = pickle.load(f)
-            pathImg = self.directory + "/" + self.file_list[self.im_idx]
-            # self.label_i_10.setStyleSheet('font: 20pt "Agency FB"')
-            # self.label_i_10.setStyleSheet('color: rgb(0, 0, 0)')
-            strIm_num = "处理第 " + str(self.im_idx) + " 张"
-            self.label_i_10.setText(strIm_num)
-            self.label_10_response(pathImg)
-        except Exception:
-            pass
+        if self.count:
+            img = QPixmap(self.fp2)
+            self.label_10.setPixmap(img)
+            self.count = 0
+        else:
+            img = QPixmap(self.fp1)
+            self.label_10.setPixmap(img)
+            self.count = 1
 
     def label_10_response(self, pathImg):
-        (img, results) = process.pro(pathImg)
+        (fp1, fp2, results) = process.pro(pathImg)
+        self.count = 1
+        self.fp1 = fp1
+        self.fp2 = fp2
         w = self.label_10.width()
         h = self.label_10.height()
+        img = QPixmap(fp1)
         img = img.scaled(w, h)
         self.label_10.setScaledContents(True)  # 让图片自适应label大小
         self.label_10.setPixmap(img)
