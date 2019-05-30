@@ -1,16 +1,12 @@
-# -*- coding: utf-8 -*-
 from myui import Ui_MainWindow
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
-from PyQt5.QtGui import QPixmap
-import os
 import process
-import dill
-import pickle
-from sklearn.externals import joblib
-
-import numpy as np
-from skimage import exposure
+import os
+import torch
+from PyQt5.QtGui import QPixmap
+from torch import nn
+from unet import UNet
 
 
 class mywindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -21,6 +17,11 @@ class mywindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.pushBt_up_10.clicked.connect(self.pre)
         self.pushBt_dwn_10.clicked.connect(self.next)
         self.pushBt_cntinu_10.clicked.connect(self.continu)
+        # n_class = 3
+        # model = UNet(n_channels=3, n_classes=n_class)
+        # model = nn.DataParallel(model, device_ids=[0])
+        # model.load_state_dict(torch.load('trainmodels.pth'))
+
 
     # def open_one(self):  # 处理单张图像
     #     file_name = QFileDialog.getOpenFileName()

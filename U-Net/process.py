@@ -41,13 +41,14 @@ def pro(path):
     out_img_tensor = torch.zeros(3, n[1], n[2])
     out_img_tensor[0, pre == 2] = 1
     out_img_tensor[1, pre == 1] = 1
-    if torch.sum(out_img_tensor[0]) - torch.sum(out_img_tensor[1]) > 0:
-        out_img_tensor[0] += out_img_tensor[1]
-        out_img_tensor[1] = 0
+    ratio = torch.sum(out_img_tensor[0]) / torch.sum(out_img_tensor)
+    if ratio > 0.3:
+        # out_img_tensor[0] += out_img_tensor[1]
+        # out_img_tensor[1] = 0
         results = '恶性'
     else:
-        out_img_tensor[1] += out_img_tensor[0]
-        out_img_tensor[0] = 0
+        # out_img_tensor[1] += out_img_tensor[0]
+        # out_img_tensor[0] = 0
         results = '良性'  # 判断良恶性
     out_img_ndarray = cv.cvtColor(np.asarray(tensor2pil(out_img_tensor)), cv.COLOR_RGB2BGR)
     image_cv = cv.cvtColor(np.asarray(image), cv.COLOR_RGB2BGR)
