@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/SoftUi.iml" filepath="$PROJECT_DIR$/.idea/SoftUi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../misc/.idea/misc.iml" filepath="$PROJECT_DIR$/../misc/.idea/misc.iml" />
       <module fileurl="file://$PROJECT_DIR$/../thyroid_nodule/.idea/thyroid_nodule.iml" filepath="$PROJECT_DIR$/../thyroid_nodule/.idea/thyroid_nodule.iml" />
     </modules>
   </component>
